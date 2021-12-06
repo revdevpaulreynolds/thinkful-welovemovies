@@ -23,7 +23,7 @@ function reviews(req, res) {
 }
 
 module.exports = {
-    list,
+    list: [asyncErrorBoundary(list)],
     read: [movieExists, asyncErrorBoundary(read)],
     theaters: [movieExists, asyncErrorBoundary(theaters)],
     reviews: [movieExists, asyncErrorBoundary(reviews)],
