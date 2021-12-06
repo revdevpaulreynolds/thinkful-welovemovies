@@ -1,5 +1,4 @@
 const path = require("path");
-const knex = require("../db/connection");
 const service = require("./movies.service");
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 
@@ -16,7 +15,6 @@ async function movieExists(req, res, next) {
 
 async function list(req, res) {
     const is_showing = req.query.is_showing;
-    console.log(is_showing);
     if (is_showing == 'true') {
         res.json({ data: await service.listShowing() });
     }
@@ -27,17 +25,17 @@ async function read(req, res) {
     res.json({ data: res.locals.movie })
 }
 
-function theaters(req, res) {
-
+async function theaters(req, res) {
+    res.json({ data: await service.theaters(req.params.movieId)})
 }
 
-function reviews(req, res) {
-
+async function reviews(req, res) {
+    res.json({ data: await service.reviews(req.params.movieId) })
 }
 
 module.exports = {
     list: [asyncErrorBoundary(list)],
     read: [asyncErrorBoundary(movieExists), asyncErrorBoundary(read)],
-    theaters: [movieExists, asyncErrorBoundary(theaters)],
-    reviews: [movieExists, asyncErrorBoundary(reviews)],
+    theaters: [asyncErrorBoundary(movieExists), asyncErrorBoundary(theaters)],
+    reviews: [asyncErrorBoundary(movieExists), asyncErrorBoundary(reviews)],
 }
