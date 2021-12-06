@@ -9,6 +9,6 @@ function destroy(req, res, next) {
 }
 
 module.exports = {
-    update,
+    update: asyncErrorBoundary(update),
     delete: asyncErrorBoundary(destroy)
 }
