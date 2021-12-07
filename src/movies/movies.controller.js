@@ -14,8 +14,8 @@ async function movieExists(req, res, next) {
 }
 
 async function list(req, res) {
-    const is_showing = req.query.is_showing;
-    if (is_showing == 'true') {
+    const isShowing = req.query.is_showing;
+    if (isShowing == 'true') {
         res.json({ data: await service.listShowing() });
     }
     res.json({ data: await service.list() })
@@ -35,7 +35,7 @@ async function reviews(req, res) {
 
 module.exports = {
     list: [asyncErrorBoundary(list)],
-    read: [asyncErrorBoundary(movieExists), asyncErrorBoundary(read)],
+    read: [asyncErrorBoundary(movieExists), read],
     theaters: [asyncErrorBoundary(movieExists), asyncErrorBoundary(theaters)],
     reviews: [asyncErrorBoundary(movieExists), asyncErrorBoundary(reviews)],
 }
