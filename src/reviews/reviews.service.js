@@ -1,16 +1,16 @@
 const knex = require("../db/connection");
 
-function read(reviewId) {
+function read(review_id) {
     return knex("reviews")
         .select("*")
-        .where({"review_id": reviewId})
+        .where({review_id})
         .first()
 }
 
 function readReviewCritic(critic_id) {
-    return knex("critics as c")
+    return knex("critics")
       .select("*")
-      .where({ "c.critic_id": critic_id })
+      .where({ critic_id })
   }
 
 function update(updatedReview) {
