@@ -11,7 +11,8 @@ function readReviewCritic(critic_id) {
     return knex("critics")
       .select("*")
       .where({ critic_id })
-  }
+      .first()
+}
 
 function update(updatedReview) {
     return knex("reviews as r")

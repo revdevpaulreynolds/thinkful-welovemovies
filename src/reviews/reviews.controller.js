@@ -12,8 +12,6 @@ async function reviewExists(req, res, next) {
 }
 
 
-
-
 async function update(req, res) {
     const updatedReview = {
         ...req.body.data,
@@ -22,10 +20,10 @@ async function update(req, res) {
     let reviewData = await service
         .update(updatedReview)
 
-    let criticData = await service.readReviewCritic(res.locals.review.critic_id)
+    let critic = await service.readReviewCritic(res.locals.review.critic_id)
     const data = {
         ...reviewData,
-        critic: {...criticData[0]}
+        critic,
     }
     res.json({ data });
     
